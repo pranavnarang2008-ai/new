@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en" style="height: auto; min-height: 100%;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Gift For You 🎁</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link id="heading-font-link" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link id="body-font-link" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['var(--font-heading-name)', 'serif'],
+            body: ['var(--font-body-name)', 'sans-serif'],
+          },
+          borderRadius: {
+            small: 'var(--radius-small)',
+            large: 'var(--radius-large)',
+          },
+          boxShadow: {
+            custom: 'var(--shadow-custom)',
+            'custom-hover': 'var(--shadow-custom-hover)',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --font-heading-name: 'Playfair Display';
+      --font-body-name: 'Lato';
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Lato', sans-serif;
+      --letter-spacing-heading: 0.5px;
+      --letter-spacing-body: 0.3px;
+      --space-base: 1rem;
+      --radius-small: 9999px;
+      --radius-large: 1.25rem;
+      --border-width: 2px;
+      --shadow-color: 180 60 80;
+      --shadow-offset-x: 0px;
+      --shadow-offset-y: 8px;
+      --shadow-blur: 30px;
+      --shadow-spread: 0px;
+      --shadow-opacity: 0.4;
+      --shadow-custom: 0px 8px 30px rgba(180,60,80,0.4);
+      --shadow-custom-hover: 0px 4px 15px rgba(180,60,80,0.3);
+    }
+
+    html, body { scroll-behavior: smooth; background: #0d0010; }
+
+    @keyframes floatUp {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-18px) rotate(4deg); }
+    }
+    @keyframes floatDown {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(14px) rotate(-4deg); }
+    }
+    @keyframes heartBeat {
+      0%,100% { transform: scale(1); }
+      14% { transform: scale(1.2); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.15); }
+      70% { transform: scale(1); }
+    }
+    @keyframes shimmerText {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes gradientBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes glowPulse {
+      0%,100% { box-shadow: 0 0 20px rgba(255,100,150,0.4); }
+      50% { box-shadow: 0 0 60px rgba(255,100,150,0.8), 0 0 100px rgba(255,100,150,0.3); }
+    }
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes bounceSoft {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes starTwinkle {
+      0%,100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    @keyframes ripple {
+      0% { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+    @keyframes confettiBurst {
+      0% { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0); opacity: 0; }
+    }
+    @keyframes musicBounce {
+      from { height: 6px; }
+      to { height: 22px; }
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(8px); opacity: 0.5; }
+    }
+
+    .float-up { animation: floatUp 4s ease-in-out infinite; }
+    .float-down { animation: floatDown 3.5s ease-in-out infinite; }
+    .heartbeat { animation: heartBeat 1.5s ease-in-out infinite; }
+    .bounce-soft { animation: bounceSoft 2s ease-in-out infinite; }
+    .spin-slow { animation: spinSlow 12s linear infinite; }
+    .glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+    .scroll-indicator { animation: scrollBounce 1.5s ease-in-out infinite; }
+
+    .shimmer-text {
+      background: linear-gradient(90deg, #f9a8d4, #fbbf24, #f9a8d4, #c084fc, #f9a8d4);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+    }
+
+    .gradient-section {
+      background: linear-gradient(160deg, #130018, #1e0028, #0d0015, #1a001f, #0a000f);
+      background-size: 400% 400%;
+      animation: gradientBg 12s ease infinite;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.from-left { transform: translateX(-50px); }
+    .reveal.from-right { transform: translateX(50px); }
+    .reveal.scale-reveal { transform: scale(0.8); }
+    .reveal.visible { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    .sticky-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,0,16,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(249,168,212,0.15);
+      transition: all 0.3s ease;
+    }
+
+    .nav-link {
+      color: rgba(255,255,255,0.5);
+      transition: color 0.3s ease;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .nav-link:hover, .nav-link.active { color: #f9a8d4; }
+
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, #e879a0, #c084fc, #e879a0, transparent);
+      opacity: 0.4;
+    }
+
+    .polaroid {
+      background: white;
+      padding: 10px 10px 36px;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+      cursor: pointer;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.06) translateY(-10px) !important;
+      box-shadow: 0 25px 60px rgba(249,168,212,0.5) !important;
+    }
+
+    .timeline-line {
+      background: linear-gradient(to bottom, transparent, #f9a8d4, #c084fc, #fbbf24, transparent);
+    }
+
+    .music-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: #f9a8d4;
+      animation: musicBounce 0.7s ease-in-out infinite alternate;
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: starTwinkle ease-in-out infinite;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #e879a0, #c026d3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(232,121,160,0.55); }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid rgba(249,168,212,0.45);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover { background: rgba(249,168,212,0.1); border-color: #f9a8d4; transform: translateY(-2px); }
+
+    .reason-card {
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reason-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(249,168,212,0.5) !important;
+    }
+
+    #confettiContainer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9998;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      background: rgba(249,168,212,0.1);
+      border: 1px solid rgba(249,168,212,0.3);
+      color: #f9a8d4;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+
+    .wax-seal {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e879a0, #c026d3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #e879a0, #c084fc);
+      transition: width 1.8s cubic-bezier(0.22,1,0.36,1);
+      width: 0%;
+    }
+
+    /* Photo upload */
+    .photo-frame {
+      position: relative;
+      cursor: pointer;
+    }
+    .photo-frame .upload-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(232,121,160,0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 2px;
+    }
+    .photo-frame:hover .upload-overlay { opacity: 1; }
+    .photo-frame input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body class="font-body" style="height: auto; min-height: 100%; background: #0d0010;">
+
+<div id="starsContainer" class="fixed inset-0 pointer-events-none" style="z-index:0;"></div>
+<div id="confettiContainer"></div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <div class="relative max-w-3xl w-full mx-4" onclick="event.stopPropagation()">
+    <img id="lightboxImg" src="" alt="" class="w-full rounded-large" style="max-height: 80vh; object-fit: contain;">
+    <p id="lightboxCaption" class="text-center text-pink-200 font-heading italic text-lg mt-4"></p>
+    <button onclick="closeLightbox()" class="absolute -top-4 -right-4 w-10 h-10 rounded-small bg-pink-500 text-white font-bold text-xl hover:bg-pink-600 transition-colors flex items-center justify-center">✕</button>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-lg heartbeat">🎁</span>
+      <span class="font-heading text-white text-sm font-bold italic">A Gift For You</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6">
+      <span class="nav-link active" onclick="scrollToSection('hero')">Home</span>
+      <span class="nav-link" onclick="scrollToSection('memories')">Memories</span>
+      <span class="nav-link" onclick="scrollToSection('letter')">Letter</span>
+      <span class="nav-link" onclick="scrollToSection('reasons')">Reasons</span>
+      <span class="nav-link" onclick="scrollToSection('timeline')">Timeline</span>
+      <span class="nav-link" onclick="scrollToSection('finale')">Finale</span>
+    </div>
+    <button id="musicBtn" onclick="toggleMusic()" class="w-10 h-10 rounded-small glass flex items-center justify-center gap-0.5 hover:scale-110 transition-all">
+      <div class="music-bar" style="animation-delay:0s;"></div>
+      <div class="music-bar" style="animation-delay:0.2s;"></div>
+      <div class="music-bar" style="animation-delay:0.4s;"></div>
+    </button>
+  </div>
+</nav>
+
+<!-- SECTION 1: HERO -->
+<section id="hero" class="gradient-section relative overflow-hidden" style="padding-top: 80px; max-height: 1100px;">
+  <div class="blob w-96 h-96 opacity-20 top-0 left-0" style="background: radial-gradient(circle, #e879a0, transparent); animation: floatUp 7s ease-in-out infinite;"></div>
+  <div class="blob w-80 h-80 opacity-20 bottom-0 right-0" style="background: radial-gradient(circle, #c084fc, transparent); animation: floatDown 8s ease-in-out infinite;"></div>
+  <div class="blob w-64 h-64 opacity-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(circle, #fbbf24, transparent);"></div>
+
+  <div class="absolute top-24 left-6 text-3xl float-up opacity-50" style="animation-delay:0s; z-index:2;">🎁</div>
+  <div class="absolute top-40 right-10 text-2xl float-down opacity-50" style="animation-delay:0.6s; z-index:2;">✨</div>
+  <div class="absolute top-1/3 left-14 text-xl float-up opacity-40" style="animation-delay:1.2s; z-index:2;">🌸</div>
+  <div class="absolute bottom-24 left-10 text-2xl float-down opacity-50" style="animation-delay:1.8s; z-index:2;">💫</div>
+  <div class="absolute bottom-16 right-14 text-2xl float-up opacity-40" style="animation-delay:0.9s; z-index:2;">🌟</div>
+  <div class="absolute top-28 left-1/3 text-xl float-down opacity-30" style="animation-delay:2.2s; z-index:2;">⭐</div>
+  <div class="absolute bottom-32 right-1/3 text-2xl float-up opacity-40" style="animation-delay:0.4s; z-index:2;">🎀</div>
+
+  <div class="relative flex flex-col items-center justify-center text-center px-6 py-24 md:py-32" style="z-index:2;">
+    <div class="mb-8 relative reveal scale-reveal">
+      <div class="text-8xl md:text-9xl heartbeat">🎁</div>
+      <div class="absolute inset-0 rounded-full" style="background: radial-gradient(circle, rgba(249,168,212,0.25), transparent); animation: ripple 2.5s ease-out infinite;"></div>
+    </div>
+
+    <div class="section-label mb-5 reveal reveal-delay-1">✦ Something Special For You ✦</div>
+
+    <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-bold mb-5 reveal reveal-delay-2">
+      <span class="shimmer-text">A Gift</span><br>
+      <span class="text-white italic">From a Friend</span>
+    </h1>
+
+    <div class="flex items-center gap-4 my-4 reveal reveal-delay-3">
+      <div class="h-px w-16 md:w-28" style="background: linear-gradient(to right, transparent, #f9a8d4);"></div>
+      <span class="text-pink-300 text-xl">✨</span>
+      <div class="h-px w-16 md:w-28" style="background: linear-gradient(to left, transparent, #f9a8d4);"></div>
+    </div>
+
+    <p class="text-gray-300 text-base md:text-lg max-w-md leading-relaxed mb-10 reveal reveal-delay-4">
+      I made this just for you. Every page, every word, every photo — it's all a little piece of how much you mean to me. 🌸
+    </p>
+
+    <div class="glass rounded-large p-6 max-w-sm w-full mb-10 reveal reveal-delay-5">
+      <p class="text-pink-200 text-sm mb-3 opacity-80">Who is this gift for? 🎀</p>
+      <input
+        type="text"
+        id="recipientName"
+        placeholder="Enter your name..."
+        class="w-full px-4 py-3 rounded-small text-white text-center font-body text-base mb-4"
+        style="background: rgba(255,255,255,0.08); border: 1px solid rgba(249,168,212,0.4); outline: none;"
+        oninput="updateName(this.value)"
+      >
+      <button onclick="scrollToSection('memories')" class="btn-primary w-full py-3 rounded-small font-heading font-bold text-white text-base">
+        Open Your Gift 🎀
+      </button>
+    </div>
+
+    <div class="scroll-indicator opacity-50 reveal reveal-delay-6">
+      <p class="text-pink-300 text-xs tracking-widest mb-2">SCROLL TO EXPLORE</p>
+      <div class="text-pink-300 text-2xl">↓</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 2: MEMORIES -->
+<section id="memories" class="gradient-section relative overflow-hidden" style="max-height: 1500px;">
+  <div class="blob w-80 h-80 opacity-15 top-0 right-0" style="background: radial-gradient(circle, #fbbf24, transparent); animation: floatUp 6s ease-in-out infinite;"></div>
+  <div class="blob w-96 h-96 opacity-15 bottom-0 left-0" style="background: radial-gradient(circle, #e879a0, transparent); animation: floatDown 8s ease-in-out infinite;"></div>
+
+  <div class="relative px-4 py-20 md:py-28" style="z-index:2;">
+    <div class="text-center mb-14">
+      <div class="section-label mb-5 reveal">📸 Our Best Moments</div>
+      <h2 class="font-heading text-4xl md:text-6xl font-bold text-white mb-4 reveal reveal-delay-1">
+        <span class="shimmer-text">Memories</span>
+        <span class="text-white italic"> We Made</span>
+      </h2>
+      <p class="text-gray-400 text-sm md:text-base max-w-md mx-auto reveal reveal-delay-2">Every photo tells a story. Every moment is one I'm glad we shared together.</p>
+      <p class="text-pink-300 text-xs mt-3 reveal reveal-delay-3">📎 Click any photo to upload your own image</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 px-2 mb-6">
+
+      <div class="polaroid reveal from-left reveal-delay-1" style="transform: rotate(-3deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo1')" title="Upload your photo">
+          <img id="photo1" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" alt="Memory 1" class="w-full aspect-square object-cover" onclick="openLightboxById('photo1','A great day together ✨')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">A great day ✨</p>
+      </div>
+
+      <div class="polaroid reveal reveal-delay-2" style="transform: rotate(2deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo2')" title="Upload your photo">
+          <img id="photo2" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" alt="Memory 2" class="w-full aspect-square object-cover" onclick="openLightboxById('photo2','Together always 🌸')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">Together always 🌸</p>
+      </div>
+
+      <div class="polaroid reveal from-right reveal-delay-3" style="transform: rotate(-1.5deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo3')" title="Upload your photo">
+          <img id="photo3" src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Memory 3" class="w-full aspect-square object-cover" onclick="openLightboxById('photo3','Pure happiness ✨')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">Pure happiness ✨</p>
+      </div>
+
+      <div class="polaroid reveal from-left reveal-delay-2" style="transform: rotate(3deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo4')" title="Upload your photo">
+          <img id="photo4" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&q=80" alt="Memory 4" class="w-full aspect-square object-cover" onclick="openLightboxById('photo4','Golden moments 🌟')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">Golden moments 🌟</p>
+      </div>
+
+      <div class="polaroid reveal reveal-delay-3" style="transform: rotate(-2deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo5')" title="Upload your photo">
+          <img id="photo5" src="https://images.unsplash.com/photo-1543807535-eceef0bc6599?w=400&q=80" alt="Memory 5" class="w-full aspect-square object-cover" onclick="openLightboxById('photo5','Laughing together 😄')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">Laughing together 😄</p>
+      </div>
+
+      <div class="polaroid reveal from-right reveal-delay-4" style="transform: rotate(1.5deg); box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
+        <div class="photo-frame">
+          <input type="file" accept="image/*" onchange="replacePhoto(this, 'photo6')" title="Upload your photo">
+          <img id="photo6" src="https://images.unsplash.com/photo-1506869640319-fe1a24fd76dc?w=400&q=80" alt="Memory 6" class="w-full aspect-square object-cover" onclick="openLightboxById('photo6','Best memories 🌟')">
+          <div class="upload-overlay">
+            <span class="text-white text-2xl">📷</span>
+            <span class="text-white text-xs mt-1 font-bold">Upload Photo</span>
+          </div>
+        </div>
+        <p class="text-gray-500 text-xs text-center mt-2 font-body italic">Best memories 🌟</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 3: LETTER -->
+<section id="letter" class="gradient-section relative overflow-hidden" style="max-height: 1200px;">
+  <div class="blob w-72 h-72 opacity-15 top-1/4 left-0" style="background: radial-gradient(circle, #c084fc, transparent); animation: floatDown 7s ease-in-out infinite;"></div>
+  <div class="blob w-72 h-72 opacity-15 bottom-1/4 right-0" style="background: radial-gradient(circle, #e879a0, transparent); animation: floatUp 6s ease-in-out infinite;"></div>
+
+  <div class="relative px-4 py-20 md:py-28 flex flex-col items-center" style="z-index:2;">
+    <div class="text-center mb-12">
+      <div class="section-label mb-5 reveal">✉️ From Me to You</div>
+      <h2 class="font-heading text-4xl md:text-6xl font-bold text-white mb-4 reveal reveal-delay-1">
+        <span class="text-white italic">A Note</span>
+        <span class="shimmer-text"> For You</span>
+      </h2>
+    </div>
+
+    <div class="max-w-2xl w-full reveal reveal-delay-2">
+      <div class="glass rounded-large p-8 md:p-12 relative overflow-hidden">
+        <div class="absolute top-4 left-4 text-2xl opacity-30 float-up">🌟</div>
+        <div class="absolute top-4 right-4 text-2xl opacity-30 float-down">✨</div>
+        <div class="absolute bottom-4 left-4 text-2xl opacity-30 float-down">🌸</div>
+        <div class="absolute bottom-4 right-4 text-2xl opacity-30 float-up">🎀</div>
+
+        <div class="text-center mb-8">
+          <div class="text-5xl mb-4 heartbeat">✉️</div>
+          <p class="font-heading text-pink-200 text-xl md:text-2xl italic" id="letterGreeting">Dear Someone Special,</p>
+        </div>
+
+        <div class="space-y-5 text-gray-300 text-sm md:text-base leading-relaxed font-body">
+          <p>There are people in life who just make everything better — not because they try to, but simply because of who they are. You are one of those people for me.</p>
+          <p>Every time we hang out, every time we talk, every time we laugh about something completely ridiculous — those are the moments I treasure most. You have a way of making ordinary days feel like something worth remembering.</p>
+          <p>I made this little website because I wanted you to know — in a way that lasts longer than a text message — just how much your friendship means to me. Every photo, every word, every little detail here is a small way of saying thank you for being you.</p>
+          <p class="text-pink-200 font-heading italic text-lg md:text-xl text-center py-4 border-t border-b" style="border-color: rgba(249,168,212,0.2);">
+            "A good friend is like a star — you don't always see them, but you know they're always there." 🌟
+          </p>
+        </div>
+
+        <div class="text-right mt-8">
+          <p class="text-pink-300 font-heading italic text-lg">Your friend,</p>
+          <p class="text-white font-heading font-bold text-xl mt-1" id="senderName">Someone Who Cares 🌟</p>
+        </div>
+
+        <div class="flex justify-center mt-8">
+          <div class="wax-seal">🌟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 4: REASONS -->
+<section id="reasons" class="gradient-section relative overflow-hidden" style="max-height: 1500px;">
+  <div class="blob w-96 h-96 opacity-15 top-0 left-1/2 -translate-x-1/2" style="background: radial-gradient(circle, #fbbf24, transparent);"></div>
+
+  <div class="relative px-4 py-20 md:py-28" style="z-index:2;">
+    <div class="text-center mb-14">
+      <div class="section-label mb-5 reveal">🌟 The List</div>
+      <h2 class="font-heading text-4xl md:text-6xl font-bold text-white mb-4 reveal reveal-delay-1">
+        <span class="shimmer-text">Reasons</span>
+        <span class="text-white italic"> You're Amazing</span>
+      </h2>
+      <p class="text-gray-400 text-sm max-w-sm mx-auto reveal reveal-delay-2">Just a few of the countless reasons you're the best friend. ✨</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-2">
+      <div class="reason-card glass rounded-large p-6 reveal from-left reveal-delay-1" style="border: 1px solid rgba(249,168,212,0.15);">
+        <div class="text-4xl mb-4">😂</div>
+        <h3 class="font-heading text-pink-200 text-lg font-bold mb-2">Your Humor</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">You have the ability to make anyone laugh, even on the worst days. Your sense of humor is genuinely one of a kind.</p>
+      </div>
+
+      <div class="reason-card glass rounded-large p-6 reveal reveal-delay-2" style="border: 1px solid rgba(192,132,252,0.15);">
+        <div class="text-4xl mb-4">🤝</div>
+        <h3 class="font-heading text-purple-300 text-lg font-bold mb-2">Your Loyalty</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">You show up. Every single time. That kind of loyalty is rare and I never take it for granted.</p>
+      </div>
+
+      <div class="reason-card glass rounded-large p-6 reveal from-right reveal-delay-3" style="border: 1px solid rgba(251,191,36,0.15);">
+        <div class="text-4xl mb-4">🤗</div>
+        <h3 class="font-heading text-yellow-300 text-lg font-bold mb-2">Your Kindness</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">You have the biggest heart of anyone I know. The way you care for others without expecting anything in return is truly rare.</p>
+      </div>
+
+      <div class="reason-card glass rounded-large p-6 reveal from-left reveal-delay-2" style="border: 1px solid rgba(249,168,212,0.15);">
+        <div class="text-4xl mb-4">🌟</div>
+        <h3 class="font-heading text-pink-200 text-lg font-bold mb-2">Your Energy</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Being around you just feels good. You bring a kind of energy that makes every room brighter and every moment more fun.</p>
+      </div>
+
+      <div class="reason-card glass rounded-large p-6 reveal reveal-delay-3" style="border: 1px solid rgba(192,132,252,0.15);">
+        <div class="text-4xl mb-4">🧠</div>
+        <h3 class="font-heading text-purple-300 text-lg font-bold mb-2">Your Mind</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Your thoughts, your ideas, your perspective on the world — talking with you always makes me think differently.</p>
+      </div>
+
+      <div class="reason-card glass rounded-large p-6 reveal from-right reveal-delay-4" style="border: 1px solid rgba(251,191,36,0.15);">
+        <div class="text-4xl mb-4">✨</div>
+        <h3 class="font-heading text-yellow-300 text-lg font-bold mb-2">Simply You</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">More than anything, I'm grateful for you being exactly who you are. Unapologetically, wonderfully, uniquely you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 5: TIMELINE -->
+<section id="timeline" class="gradient-section relative overflow-hidden" style="max-height: 1500px;">
+  <div class="blob w-80 h-80 opacity-15 bottom-0 left-0" style="background: radial-gradient(circle, #e879a0, transparent); animation: floatUp 7s ease-in-out infinite;"></div>
+  <div class="blob w-72 h-72 opacity-15 top-0 right-0" style="background: radial-gradient(circle, #c084fc, transparent); animation: floatDown 6s ease-in-out infinite;"></div>
+
+  <div class="relative px-4 py-20 md:py-28" style="z-index:2;">
+    <div class="text-center mb-14">
+      <div class="section-label mb-5 reveal">⭐ Our Story</div>
+      <h2 class="font-heading text-4xl md:text-6xl font-bold text-white mb-4 reveal reveal-delay-1">
+        <span class="text-white italic">Our</span>
+        <span class="shimmer-text"> Friendship</span>
+      </h2>
+      <p class="text-gray-400 text-sm max-w-sm mx-auto reveal reveal-delay-2">Every chapter of our story, written in stars. ⭐</p>
+    </div>
+
+    <div class="max-w-2xl mx-auto relative px-4">
+      <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 timeline-line" style="z-index:1;"></div>
+
+      <div class="space-y-12">
+        <div class="flex items-center gap-4 md:gap-8 reveal from-left reveal-delay-1">
+          <div class="flex-1 text-right">
+            <div class="glass rounded-large p-4 md:p-5 inline-block text-left">
+              <p class="text-pink-300 text-xs font-bold mb-1 tracking-wider">CHAPTER 1</p>
+              <h3 class="font-heading text-white text-base md:text-lg font-bold mb-1">How We Met</h3>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">The day it all started. Neither of us knew back then just how much this friendship would come to mean.</p>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl z-10 glow-pulse" style="background: linear-gradient(135deg, #e879a0, #c026d3);">🌟</div>
+          <div class="flex-1"></div>
+        </div>
+
+        <div class="flex items-center gap-4 md:gap-8 reveal from-right reveal-delay-2">
+          <div class="flex-1"></div>
+          <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl z-10 glow-pulse" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">😂</div>
+          <div class="flex-1">
+            <div class="glass rounded-large p-4 md:p-5 inline-block">
+              <p class="text-yellow-300 text-xs font-bold mb-1 tracking-wider">CHAPTER 2</p>
+              <h3 class="font-heading text-white text-base md:text-lg font-bold mb-1">First Adventures</h3>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">The first time we laughed until our stomachs hurt. I knew I never wanted to stop having adventures with you.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 md:gap-8 reveal from-left reveal-delay-3">
+          <div class="flex-1 text-right">
+            <div class="glass rounded-large p-4 md:p-5 inline-block text-left">
+              <p class="text-purple-300 text-xs font-bold mb-1 tracking-wider">CHAPTER 3</p>
+              <h3 class="font-heading text-white text-base md:text-lg font-bold mb-1">The Real Talks</h3>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">Late nights, long conversations, and the realization that I could talk to you about absolutely anything.</p>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl z-10 glow-pulse" style="background: linear-gradient(135deg, #c084fc, #8b5cf6);">🌙</div>
+          <div class="flex-1"></div>
+        </div>
+
+        <div class="flex items-center gap-4 md:gap-8 reveal from-right reveal-delay-4">
+          <div class="flex-1"></div>
+          <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl z-10 glow-pulse" style="background: linear-gradient(135deg, #e879a0, #c026d3);">🎉</div>
+          <div class="flex-1">
+            <div class="glass rounded-large p-4 md:p-5 inline-block">
+              <p class="text-pink-300 text-xs font-bold mb-1 tracking-wider">CHAPTER 4</p>
+              <h3 class="font-heading text-white text-base md:text-lg font-bold mb-1">The Inside Jokes Era</h3>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">The moments only we understand. The references nobody else gets. The kind of friendship that has its own language.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 md:gap-8 reveal from-left reveal-delay-5">
+          <div class="flex-1 text-right">
+            <div class="glass rounded-large p-4 md:p-5 inline-block text-left">
+              <p class="text-yellow-300 text-xs font-bold mb-1 tracking-wider">CHAPTER 5 — NOW</p>
+              <h3 class="font-heading text-white text-base md:text-lg font-bold mb-1">This Moment</h3>
+              <p class="text-gray-400 text-xs md:text-sm leading-relaxed">Right now. This gift. This page. This is me saying — you are one of the best things in my life. And there are so many more chapters ahead. ✨</p>
+            </div>
+          </div>
+          <div class="w-12 h-12 rounded-full flex-shrink-0 flex items-center justify-center text-xl z-10 glow-pulse" style="background: linear-gradient(135deg, #fbbf24, #e879a0);">🎁</div>
+          <div class="flex-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SECTION 6: FINALE -->
+<section id="finale" class="gradient-section relative overflow-hidden" style="max-height: 1200px;">
+  <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(232,121,160,0.12) 0%, transparent 70%);"></div>
+
+  <div class="absolute top-16 left-8 text-3xl float-up opacity-50" style="z-index:2;">🌟</div>
+  <div class="absolute top-24 right-10 text-2xl float-down opacity-50" style="z-index:2; animation-delay:0.5s;">✨</div>
+  <div class="absolute bottom-24 left-10 text-2xl float-up opacity-40" style="z-index:2; animation-delay:1s;">🎀</div>
+  <div class="absolute bottom-16 right-8 text-3xl float-down opacity-50" style="z-index:2; animation-delay:1.5s;">🌸</div>
+
+  <div class="relative px-4 py-20 md:py-28 flex flex-col items-center text-center" style="z-index:2;">
+    <div class="text-8xl md:text-9xl mb-6 heartbeat reveal scale-reveal">🎁</div>
+
+    <div class="section-label mb-5 reveal reveal-delay-1">✦ With Appreciation ✦</div>
+
+    <h2 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold mb-6 reveal reveal-delay-2">
+      <span class="shimmer-text" id="finalName">You Are</span><br>
+      <span class="text-white italic">The Best ✨</span>
+    </h2>
+
+    <div class="glass rounded-large p-8 max-w-lg w-full mb-10 reveal reveal-delay-3" style="border: 1px solid rgba(249,168,212,0.25);">
+      <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-5">
+        Thank you for being in my life. Thank you for every laugh, every memory, every moment of real friendship. This little website is just a tiny reflection of how much you mean to me as a friend.
+      </p>
+      <p class="text-pink-200 font-heading italic text-lg">
+        "Friends are the family we choose for ourselves." 🌸
+      </p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 max-w-lg w-full mb-10 reveal reveal-delay-4">
+      <div class="glass rounded-large p-4 md:p-5">
+        <div class="font-heading text-3xl md:text-4xl font-bold shimmer-text">∞</div>
+        <p class="text-gray-400 text-xs mt-1">Memories made</p>
+      </div>
+      <div class="glass rounded-large p-4 md:p-5">
+        <div class="font-heading text-3xl md:text-4xl font-bold shimmer-text">100%</div>
+        <p class="text-gray-400 text-xs mt-1">Real friendship</p>
+      </div>
+      <div class="glass rounded-large p-4 md:p-5">
+        <div class="font-heading text-3xl md:text-4xl font-bold shimmer-text">1</div>
+        <p class="text-gray-400 text-xs mt-1">Friend like you</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 mb-10 reveal reveal-delay-5">
+      <button onclick="triggerConfetti()" class="btn-primary px-10 py-4 rounded-small font-heading font-bold text-white text-base">
+        🎊 Celebrate!
+      </button>
+      <button onclick="shareGift()" class="btn-secondary px-10 py-4 rounded-small font-heading font-bold text-pink-300 text-base">
+        🎀 Share This Gift
+      </button>
+    </div>
+
+    <button onclick="scrollToSection('hero')" class="text-gray-500 text-xs hover:text-pink-300 transition-colors underline reveal reveal-delay-6">
+      ↩ Back to the beginning
+    </button>
+
+    <div class="mt-16 reveal">
+      <div class="flex justify-center gap-3 text-2xl mb-4">
+        <span class="float-up" style="animation-delay:0s;">🌟</span>
+        <span class="float-down" style="animation-delay:0.3s;">🌸</span>
+        <span class="float-up" style="animation-delay:0.6s;">✨</span>
+        <span class="float-down" style="animation-delay:0.9s;">💫</span>
+        <span class="float-up" style="animation-delay:1.2s;">🎀</span>
+      </div>
+      <p class="text-gray-600 text-xs tracking-widest">MADE WITH CARE, JUST FOR YOU 🌸</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // STARS
+  const starsContainer = document.getElementById('starsContainer');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    const size = Math.random() * 2.5 + 0.5;
+    star.className = 'star';
+    star.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*4}s;`;
+    starsContainer.appendChild(star);
+  }
+
+  // SCROLL REVEAL
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // NAV ACTIVE STATE
+  const sections = ['hero','memories','letter','reasons','timeline','finale'];
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const idx = sections.indexOf(entry.target.id);
+        if (idx !== -1) navLinks[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(id => { const el = document.getElementById(id); if (el) navObserver.observe(el); });
+
+  // SCROLL TO SECTION
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // NAME PERSONALIZATION
+  function updateName(name) {
+    const trimmed = name.trim();
+    document.getElementById('letterGreeting').textContent = trimmed ? 'Dear ' + trimmed + ',' : 'Dear Someone Special,';
+    document.getElementById('finalName').textContent = trimmed ? trimmed + ', You Are' : 'You Are';
+  }
+
+  // PHOTO UPLOAD
+  function replacePhoto(input, imgId) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById(imgId).src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // LIGHTBOX
+  function openLightboxById(imgId, caption) {
+    const src = document.getElementById(imgId).src;
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function openLightbox(src, caption) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // CONFETTI
+  function triggerConfetti() {
+    const container = document.getElementById('confettiContainer');
+    const colors = ['#e879a0','#fbbf24','#c084fc','#f9a8d4','#a78bfa','#34d399','#60a5fa','#fb923c'];
+    const emojis = ['🌟','🌸','✨','💫','🎊','🎀','⭐','🎁','🎉','🌈'];
+    for (let i = 0; i < 80; i++) {
+      setTimeout(() => {
+        const piece = document.createElement('div');
+        const isEmoji = Math.random() > 0.45;
+        const x = Math.random() * 100;
+        const tx = (Math.random() - 0.5) * 500;
+        const ty = -(Math.random() * 700 + 300);
+        const rot = Math.random() * 720 - 360;
+        const size = Math.random() * 14 + 8;
+        piece.style.cssText = `position:absolute;left:${x}%;bottom:0;font-size:${isEmoji ? size : 0}px;width:${isEmoji ? 'auto' : size}px;height:${isEmoji ? 'auto' : size * 0.6}px;background:${isEmoji ? 'transparent' : colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'3px'};--tx:${tx}px;--ty:${ty}px;--rot:${rot}deg;animation:confettiBurst ${Math.random()*1+1.5}s ease-out forwards;pointer-events:none;`;
+        if (isEmoji) piece.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        container.appendChild(piece);
+        setTimeout(() => piece.remove(), 3000);
+      }, i * 25);
+    }
+  }
+
+  // SHARE
+  function shareGift() {
+    const name = document.getElementById('recipientName').value.trim();
+    const msg = name
+      ? `🎁 I made a special gift website for ${name}! Open it here: ${window.location.href}`
+      : `🎁 I made a special gift website for my friend! Open it here: ${window.location.href}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // MUSIC TOGGLE
+  let musicPlaying = true;
+  function toggleMusic() {
+    musicPlaying = !musicPlaying;
+    document.querySelectorAll('.music-bar').forEach(b => {
+      b.style.animationPlayState = musicPlaying ? 'running' : 'paused';
+      b.style.opacity = musicPlaying ? '1' : '0.3';
+    });
+  }
+</script>
+</body>
+</html>
