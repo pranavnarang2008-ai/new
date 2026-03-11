@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 18th Akshita!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link id="heading-font-link" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link id="body-font-link" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['var(--font-heading-name)', 'serif'],
+                        body: ['var(--font-body-name)', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fdf2f4',
+                            100: '#fce7eb',
+                            200: '#fad0d9',
+                            300: '#f7aab9',
+                            400: '#f27a93',
+                            500: '#e65273',
+                            600: '#d12e55',
+                            700: '#b02142',
+                            800: '#911d38',
+                            900: '#7a1b32',
+                        },
+                        champagne: {
+                            50: '#fbf8f3',
+                            100: '#f7f0e6',
+                            200: '#ede0cc',
+                            300: '#e3cba3',
+                            400: '#d9b37a',
+                            500: '#cf9c54',
+                            600: '#b57f41',
+                            700: '#916135',
+                            800: '#754d2f',
+                            900: '#61402a',
+                        }
+                    },
+                    spacing: {
+                        base: 'var(--space-base)',
+                    },
+                    borderRadius: {
+                        small: 'var(--radius-small)',
+                        large: 'var(--radius-large)',
+                    },
+                    boxShadow: {
+                        custom: 'var(--shadow-custom)',
+                        'custom-hover': 'var(--shadow-custom-hover)',
+                        'soft': '0 10px 40px -10px rgba(201, 116, 138, 0.15)',
+                        'glow': '0 0 20px rgba(232, 196, 106, 0.4)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2.5s linear infinite',
+                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            /* Typography */
+            --font-heading-name: 'Playfair Display';
+            --font-body-name: 'DM Sans';
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --letter-spacing-heading: -0.02em;
+            --letter-spacing-body: 0px;
+            
+            /* Spacing */
+            --space-base: 1rem;
+            
+            /* Borders */
+            --radius-small: 8px;
+            --radius-large: 24px;
+            --border-width: 1px;
+            
+            /* Shadows */
+            --shadow-color: 201 116 138;
+            --shadow-offset-x: 0px;
+            --shadow-offset-y: 8px;
+            --shadow-blur: 24px;
+            --shadow-spread: -4px;
+            --shadow-opacity: 0.15;
+            --shadow-custom: 0px 8px 24px -4px rgba(var(--shadow-color), var(--shadow-opacity));
+            --shadow-custom-hover: 0px 12px 32px -4px rgba(var(--shadow-color), 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FDF6EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C9748A;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b02142;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .polaroid-tilt-1 { transform: rotate(-2deg); }
+        .polaroid-tilt-2 { transform: rotate(3deg); }
+        .polaroid-tilt-3 { transform: rotate(-1.5deg); }
+        
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #E8C46A 0%, #C9748A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Photo Frame Styles */
+        .photo-frame {
+            position: relative;
+            background: white;
+            padding: 1rem;
+            padding-bottom: 3.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .photo-frame:hover {
+            transform: scale(1.02) rotate(1deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 10;
+        }
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(0,0,0,0.05);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-body bg-[#FDF6EC] text-neutral-800 overflow-x-hidden" style="height: auto; min-height: 100%;">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FDF6EC]/80 backdrop-blur-md border-b border-rose-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-heading text-2xl text-[#C9748A] font-bold tracking-tight">Akshita's 18th</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#memories" class="text-neutral-600 hover:text-[#C9748A] transition-colors text-sm font-medium">Memories</a>
+                    <a href="#message" class="text-neutral-600 hover:text-[#C9748A] transition-colors text-sm font-medium">Message</a>
+                    <a href="#reasons" class="text-neutral-600 hover:text-[#C9748A] transition-colors text-sm font-medium">18 Reasons</a>
+                    <a href="#wishes" class="text-neutral-600 hover:text-[#C9748A] transition-colors text-sm font-medium">Wishes</a>
+                </div>
+                <button onclick="triggerConfetti()" class="bg-[#C9748A] hover:bg-[#b02142] text-white px-4 py-2 rounded-full text-sm font-medium transition-all shadow-custom hover:shadow-custom-hover transform hover:-translate-y-0.5">
+                    Celebrate 🎉
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <div class="absolute inset-0 z-0 opacity-40">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+            <div class="absolute bottom-20 right-10 w-80 h-80 bg-champagne-200 rounded-full mix-blend-multiply filter blur-3xl animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-100 rounded-full mix-blend-multiply filter blur-3xl animate-pulse-slow"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <div class="inline-block mb-6 animate-float">
+                <span class="bg-white/80 backdrop-blur-sm border border-rose-200 text-[#C9748A] px-6 py-2 rounded-full text-sm font-bold tracking-widest uppercase shadow-sm">
+                    Officially 18
+                </span>
+            </div>
+            
+            <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl text-neutral-900 mb-6 leading-tight">
+                Happy Birthday <br> <span class="text-gradient-gold italic pr-2">Akshita!</span>
+            </h1>
+            
+            <p class="font-heading text-2xl md:text-3xl text-[#C9748A] mb-8 font-medium">
+                Welcome to adulthood!
+            </p>
+            
+            <p class="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto mb-12 font-light">
+                Here's to new adventures, big dreams, and making memories that last a lifetime.
+            </p>
+
+            <div class="animate-bounce mt-12">
+                <a href="#stats" class="text-neutral-400 hover:text-[#C9748A] transition-colors">
+                    <i data-lucide="arrow-down" class="w-8 h-8 mx-auto"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section with Enhanced Animation -->
+    <section id="stats" class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="font-heading text-4xl md:text-5xl text-neutral-900 mb-4">18 Years of Awesome</h2>
+                <div class="w-24 h-1 bg-[#C9748A] mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Years -->
+                <div class="bg-[#FDF6EC] p-6 rounded-large shadow-soft text-center transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll">
+                    <div class="text-[#C9748A] mb-4 flex justify-center">
+                        <i data-lucide="calendar" class="w-8 h-8"></i>
+                    </div>
+                    <div class="font-heading text-4xl font-bold text-neutral-900 mb-2 counter" data-target="18">0</div>
+                    <div class="text-neutral-500 uppercase tracking-widest text-xs font-medium">Years</div>
+                </div>
+
+                <!-- Days -->
+                <div class="bg-white border border-rose-100 p-6 rounded-large shadow-custom text-center transform scale-105 z-10 reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="text-[#E8C46A] mb-4 flex justify-center">
+                        <i data-lucide="sun" class="w-10 h-10"></i>
+                    </div>
+                    <div class="font-heading text-5xl font-bold text-[#C9748A] mb-2 counter" data-target="6574">0</div>
+                    <div class="text-neutral-500 uppercase tracking-widest text-xs font-medium">Days</div>
+                </div>
+
+                <!-- Hours -->
+                <div class="bg-[#FDF6EC] p-6 rounded-large shadow-soft text-center transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="text-[#C9748A] mb-4 flex justify-center">
+                        <i data-lucide="clock" class="w-8 h-8"></i>
+                    </div>
+                    <div class="font-heading text-4xl font-bold text-neutral-900 mb-2 counter" data-target="157776">0</div>
+                    <div class="text-neutral-500 uppercase tracking-widest text-xs font-medium">Hours</div>
+                </div>
+
+                <!-- Seconds (Live Ticker) -->
+                <div class="bg-white border border-rose-100 p-6 rounded-large shadow-soft text-center transform hover:-translate-y-2 transition-transform duration-300 reveal-on-scroll" style="transition-delay: 300ms;">
+                    <div class="text-[#E8C46A] mb-4 flex justify-center">
+                        <i data-lucide="timer" class="w-8 h-8 animate-pulse"></i>
+                    </div>
+                    <div class="font-heading text-4xl font-bold text-neutral-900 mb-2" id="seconds-counter">00</div>
+                    <div class="text-neutral-500 uppercase tracking-widest text-xs font-medium">Seconds Ticking</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section - Functional Editable Frames -->
+    <section id="memories" class="py-24 bg-[#F7E7CE]/30 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="font-script text-3xl text-[#C9748A] block mb-2">Snapshots</span>
+                <h2 class="font-heading text-4xl md:text-5xl text-neutral-900">Favorite Moments</h2>
+                <p class="text-neutral-500 mt-4 text-sm">Click any photo to upload your own!</p>
+            </div>
+
+            <div class="flex overflow-x-auto md:grid md:grid-cols-3 lg:grid-cols-4 gap-8 pb-8 md:pb-0 snap-x snap-mandatory hide-scrollbar px-4 md:px-0">
+                
+                <!-- Photo Frame 1 -->
+                <div class="min-w-[280px] md:min-w-0 snap-center photo-frame transform md:rotate-[-2deg] reveal-on-scroll" onclick="document.getElementById('upload-1').click()">
+                    <div class="aspect-[4/5] bg-neutral-100 mb-4 overflow-hidden relative group">
+                        <img id="img-1" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Akshita Photo 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full flex items-center gap-2">
+                                <i data-lucide="upload" class="w-4 h-4"></i> Change Photo
+                            </span>
+                        </div>
+                    </div>
+                    <p class="font-script text-2xl text-neutral-600 text-center absolute bottom-4 left-0 right-0">Good Vibes</p>
+                    <input type="file" id="upload-1" class="hidden" accept="image/*" onchange="previewImage(event, 'img-1')">
+                </div>
+
+                <!-- Photo Frame 2 -->
+                <div class="min-w-[280px] md:min-w-0 snap-center photo-frame transform md:rotate-[3deg] reveal-on-scroll md:mt-12" style="transition-delay: 100ms;" onclick="document.getElementById('upload-2').click()">
+                    <div class="aspect-[4/5] bg-neutral-100 mb-4 overflow-hidden relative group">
+                        <img id="img-2" src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Akshita Photo 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full flex items-center gap-2">
+                                <i data-lucide="upload" class="w-4 h-4"></i> Change Photo
+                            </span>
+                        </div>
+                    </div>
+                    <p class="font-script text-2xl text-neutral-600 text-center absolute bottom-4 left-0 right-0">That Smile!</p>
+                    <input type="file" id="upload-2" class="hidden" accept="image/*" onchange="previewImage(event, 'img-2')">
+                </div>
+
+                <!-- Photo Frame 3 -->
+                <div class="min-w-[280px] md:min-w-0 snap-center photo-frame transform md:rotate-[-1deg] reveal-on-scroll" style="transition-delay: 200ms;" onclick="document.getElementById('upload-3').click()">
+                    <div class="aspect-[4/5] bg-neutral-100 mb-4 overflow-hidden relative group">
+                        <img id="img-3" src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Akshita Photo 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full flex items-center gap-2">
+                                <i data-lucide="upload" class="w-4 h-4"></i> Change Photo
+                            </span>
+                        </div>
+                    </div>
+                    <p class="font-script text-2xl text-neutral-600 text-center absolute bottom-4 left-0 right-0">Unforgettable</p>
+                    <input type="file" id="upload-3" class="hidden" accept="image/*" onchange="previewImage(event, 'img-3')">
+                </div>
+
+                <!-- Photo Frame 4 -->
+                <div class="min-w-[280px] md:min-w-0 snap-center photo-frame transform md:rotate-[2deg] reveal-on-scroll md:mt-8" style="transition-delay: 300ms;" onclick="document.getElementById('upload-4').click()">
+                    <div class="aspect-[4/5] bg-neutral-100 mb-4 overflow-hidden relative group">
+                        <img id="img-4" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Akshita Photo 4" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full flex items-center gap-2">
+                                <i data-lucide="upload" class="w-4 h-4"></i> Change Photo
+                            </span>
+                        </div>
+                    </div>
+                    <p class="font-script text-2xl text-neutral-600 text-center absolute bottom-4 left-0 right-0">Celebration</p>
+                    <input type="file" id="upload-4" class="hidden" accept="image/*" onchange="previewImage(event, 'img-4')">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Message Section (Friendly Tone) -->
+    <section id="message" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-rose-50 via-white to-champagne-50"></div>
+        
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12 reveal-on-scroll">
+                <i data-lucide="quote" class="w-12 h-12 text-[#C9748A]/40 mx-auto mb-6 fill-current"></i>
+            </div>
+            
+            <div class="prose prose-lg md:prose-xl mx-auto text-center font-heading text-neutral-700 leading-relaxed reveal-on-scroll">
+                <p class="mb-8">
+                    Hey Akshita,
+                </p>
+                <p class="mb-8">
+                    Happy 18th Birthday! It's crazy to think you're officially an adult now. Watching you grow up and become the amazing person you are today has been so cool to witness.
+                </p>
+                <p class="mb-12">
+                    You bring so much fun and energy to everyone around you. Whether we're laughing about nothing or planning our next adventure, I'm just glad to be part of your journey. I know this year is going to be huge for you—college, new experiences, and everything in between. You've got this!
+                </p>
+                <div class="font-script text-4xl md:text-5xl text-[#C9748A] transform -rotate-2 mt-12">
+                    Cheers, <br> Pranav
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 18 Reasons You're Awesome (Friendly/Platonic) -->
+    <section id="reasons" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="font-heading text-4xl md:text-5xl text-neutral-900 mb-4">18 Reasons You Rock</h2>
+                <p class="text-neutral-500 max-w-2xl mx-auto">Just a few reasons why you're the best.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reasons-grid">
+                <!-- First 6 Items (Always Visible) -->
+                <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">1</span>
+                        <p class="text-neutral-700 font-medium pt-1">Your hilarious sense of humor.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll" style="transition-delay: 50ms;">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">2</span>
+                        <p class="text-neutral-700 font-medium pt-1">You're always down for an adventure.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">3</span>
+                        <p class="text-neutral-700 font-medium pt-1">Your impeccable taste in music.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll" style="transition-delay: 150ms;">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">4</span>
+                        <p class="text-neutral-700 font-medium pt-1">You tell it like it is.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">5</span>
+                        <p class="text-neutral-700 font-medium pt-1">Your positive energy.</p>
+                    </div>
+                </div>
+
+                <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 reveal-on-scroll" style="transition-delay: 250ms;">
+                    <div class="flex items-start space-x-4">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">6</span>
+                        <p class="text-neutral-700 font-medium pt-1">You're a great listener.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Items Container -->
+            <div id="more-reasons" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                    <!-- Items 7-18 -->
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">7</span>
+                            <p class="text-neutral-700 font-medium pt-1">You never give up.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 50ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">8</span>
+                            <p class="text-neutral-700 font-medium pt-1">Your unique style.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 100ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">9</span>
+                            <p class="text-neutral-700 font-medium pt-1">Your creativity.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 150ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">10</span>
+                            <p class="text-neutral-700 font-medium pt-1">You make boring things fun.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 200ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">11</span>
+                            <p class="text-neutral-700 font-medium pt-1">You're always there to help.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 250ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">12</span>
+                            <p class="text-neutral-700 font-medium pt-1">Your confidence.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 300ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">13</span>
+                            <p class="text-neutral-700 font-medium pt-1">You dream big.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 350ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">14</span>
+                            <p class="text-neutral-700 font-medium pt-1">You're super smart.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 400ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">15</span>
+                            <p class="text-neutral-700 font-medium pt-1">You care about people.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 450ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">16</span>
+                            <p class="text-neutral-700 font-medium pt-1">You're loyal to your friends.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-[#FDF6EC] p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 500ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#E8C46A] text-white flex items-center justify-center font-bold text-sm">17</span>
+                            <p class="text-neutral-700 font-medium pt-1">Your optimism.</p>
+                        </div>
+                    </div>
+                    <div class="group bg-white border border-neutral-100 p-6 rounded-large hover:shadow-custom transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style="animation-delay: 550ms;">
+                        <div class="flex items-start space-x-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-[#C9748A] text-white flex items-center justify-center font-bold text-sm">18</span>
+                            <p class="text-neutral-700 font-medium pt-1">Just being you!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2 lg:col-span-3 text-center py-8 reveal-on-scroll">
+                <button onclick="toggleReasons()" id="reasons-btn" class="text-[#C9748A] font-medium hover:text-[#b02142] transition-colors flex items-center justify-center mx-auto space-x-2 group">
+                    <span id="reasons-btn-text">Read all 18 reasons</span>
+                    <i data-lucide="arrow-down" id="reasons-icon" class="w-4 h-4 transform group-hover:translate-y-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wishes & Toast Section -->
+    <section id="wishes" class="py-32 bg-[#2D1B2E] relative overflow-hidden text-white">
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 50px 50px;"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="mb-12 animate-float">
+                <i data-lucide="wine" class="w-20 h-20 mx-auto text-[#E8C46A] opacity-80"></i>
+            </div>
+            
+            <h2 class="font-heading text-4xl md:text-6xl lg:text-7xl mb-8 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#F7E7CE] via-[#E8C46A] to-[#F7E7CE] animate-shimmer bg-[length:200%_auto]">
+                Here's to the nights we'll remember and the friends we'll never forget.
+            </h2>
+            
+            <p class="text-rose-100/80 text-xl md:text-2xl font-light italic max-w-2xl mx-auto">
+                May your 18th year be filled with unexpected adventures, deep belly laughs, and dreams coming true.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Celebration -->
+    <section class="py-24 bg-[#FDF6EC] text-center overflow-hidden">
+        <div class="max-w-xl mx-auto px-4">
+            <h3 class="font-heading text-3xl text-neutral-800 mb-8">Ready to celebrate?</h3>
+            
+            <div class="relative inline-block group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-[#C9748A] to-[#E8C46A] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <button onclick="triggerConfetti()" class="relative bg-white text-neutral-900 font-heading font-bold text-xl px-12 py-6 rounded-full shadow-custom hover:shadow-custom-hover transform hover:-translate-y-1 transition-all duration-300 flex items-center space-x-3">
+                    <span>Make a Wish</span>
+                    <i data-lucide="sparkles" class="w-5 h-5 text-[#E8C46A]"></i>
+                </button>
+            </div>
+            
+            <p class="mt-6 text-neutral-500 text-sm">Tap the button for a surprise!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-16 border-t border-rose-100">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="font-heading text-4xl text-neutral-900 mb-4">Akshita</h2>
+            <p class="text-[#C9748A] font-medium mb-8 tracking-widest uppercase text-sm">Est. 2008</p>
+            
+            <div class="flex justify-center space-x-6 mb-12">
+                <a href="#" class="w-10 h-10 rounded-full bg-rose-50 text-[#C9748A] flex items-center justify-center hover:bg-[#C9748A] hover:text-white transition-all duration-300">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-rose-50 text-[#C9748A] flex items-center justify-center hover:bg-[#C9748A] hover:text-white transition-all duration-300">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-rose-50 text-[#C9748A] flex items-center justify-center hover:bg-[#C9748A] hover:text-white transition-all duration-300">
+                    <i data-lucide="share-2" class="w-5 h-5"></i>
+                </a>
+            </div>
+            
+            <p class="font-script text-2xl text-neutral-400">
+                Made with love by Pranav
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Photo Preview Function
+        function previewImage(event, imageId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(imageId);
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Toggle Reasons Functionality
+        function toggleReasons() {
+            const moreReasons = document.getElementById('more-reasons');
+            const btnText = document.getElementById('reasons-btn-text');
+            const btnIcon = document.getElementById('reasons-icon');
+            
+            if (moreReasons.classList.contains('hidden')) {
+                moreReasons.classList.remove('hidden');
+                btnText.innerText = "Show less";
+                btnIcon.setAttribute('data-lucide', 'arrow-up');
+                lucide.createIcons();
+            } else {
+                moreReasons.classList.add('hidden');
+                btnText.innerText = "Read all 18 reasons";
+                btnIcon.setAttribute('data-lucide', 'arrow-down');
+                lucide.createIcons();
+                document.getElementById('reasons').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Confetti Animation
+        function triggerConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            function random(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                var colors = ['#C9748A', '#E8C46A', '#F7E7CE', '#FDF6EC'];
+
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: colors
+                }));
+            }, 250);
+        }
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    if (entry.target.querySelector('.counter')) {
+                        startCounters(entry.target);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Number Counter Animation (Count Up)
+        function startCounters(parent) {
+            const counters = parent.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; 
+                const increment = target / (duration / 16); 
+                
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Live Seconds Ticker
+        function startSecondsTicker() {
+            const secondsElement = document.getElementById('seconds-counter');
+            let seconds = 0;
+            setInterval(() => {
+                seconds++;
+                const now = new Date();
+                secondsElement.innerText = now.getSeconds().toString().padStart(2, '0');
+            }, 1000);
+        }
+        startSecondsTicker();
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.classList.replace('bg-[#FDF6EC]/80', 'bg-white/90');
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.classList.replace('bg-white/90', 'bg-[#FDF6EC]/80');
+            }
+        });
+    </script>
+</body>
+</html>
